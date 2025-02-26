@@ -10,18 +10,14 @@ import java.util.List;
 
 public interface ContactsRepository extends JpaRepository<Contacts,Long> {
 
-    @Query(value = "SELECT * FROM `Contacts` WHERE user_id= ?1",nativeQuery = true)
-    List<Contacts> searchUser(String user_id);
-
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM `Contacts` WHERE email=?1",nativeQuery = true)
+    public void deleteUser(String email);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM `Contacts` WHERE user_id=?1",nativeQuery = true)
-    public void deleteUser(String user_id);
-
-    @Modifying
-    @Transactional
-    @Query(value ="UPDATE `Contacts` SET `name`='kahani' WHERE user_id=?1",nativeQuery = true )
+    @Query(value ="UPDATE `Contacts` SET `name`='kahani' WHERE phono=?1",nativeQuery = true )
     public void updateUser(String phono);
 
 
